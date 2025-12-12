@@ -3,23 +3,22 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     body: {
         flex: 1,
-        backgroundColor: '#f3f3f3',
         justifyContent: 'center',
-        // alignItems: 'center',
         padding: 20,
     },
 
     titol: {
         textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 25,
         fontSize: 35,
+        color: '#44044E'
     },
 
     subtitol: {
-        fontSize: 18,
+        fontSize: 17,
         textAlign: 'center',
         marginBottom: 50,
-        color: '#666',
+        color: '#0A36C7',
     },
 
     txtInput: {
@@ -28,17 +27,23 @@ export const styles = StyleSheet.create({
 
     btn: {
         margin: 20,
+        backgroundColor: '#10007A'
+    },
+
+    btnInv: {
+        margin: 20,
+        backgroundColor: '#0A36C7',
     },
 
     forgotPwd: {
         marginBottom: 5,
-        color: '#007bff',
+        color: '#44044E',
         textAlign: 'right',
     },
 
     registerLink: {
         marginTop: 12,
-        color: '#007bff',
+        color: '#44044E',
         textAlign: 'center',
     },
 
@@ -51,10 +56,17 @@ export const styles = StyleSheet.create({
     liniaDivider: {
         flex: 1,
         margin: 10,
+        backgroundColor: '#10007A'
     },
 
     txtDivider: {
-        color: '#777777',
+        color: '#10007A',
     },
 
+    blob: {
+        width: 300,
+        height: 300,
+        overflow: 'visible',
+        position: 'absolute',
+    },
 });

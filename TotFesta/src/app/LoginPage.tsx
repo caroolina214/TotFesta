@@ -59,8 +59,8 @@ export default function LoginPage() {
 
 
             <Button
-                style={styles.btn}
-                mode="outlined"
+                style={styles.btnInv}
+                mode="contained"
                 icon="google"
                 onPress={handleGoogleLogin}
             >
