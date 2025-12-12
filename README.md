@@ -21,4 +21,4 @@ Des de festes privades fins a grans esdeveniments, TotFesta facilita la reserva 
 ## 📦 Instal·lació
 1. Clona el repositori:
    ```bash
-   git clone https://github.com/usuari/eventia.git
+   git clone https://github.com/caroolina214/TotFesta.git
