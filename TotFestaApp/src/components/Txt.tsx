@@ -16,9 +16,9 @@ export default function Txt({ variant = "bodyMedium", style, ...props }: TxtProp
         headlineMedium: isDark ? theme.colors.onPrimaryContainer : theme.colors.primary,
         headlineSmall: isDark ? theme.colors.onPrimaryContainer : theme.colors.primary,
 
-        titleLarge: isDark ? theme.colors.tertiary : (theme.colors as any).quaternary,
-        titleMedium: isDark ? theme.colors.tertiary : (theme.colors as any).quaternary,
-        titleSmall: isDark ? theme.colors.tertiary : (theme.colors as any).quaternary,
+        titleLarge: isDark ? (theme.colors as any).quaternaryContainer : (theme.colors as any).quaternary,
+        titleMedium: isDark ? (theme.colors as any).quaternaryContainer : (theme.colors as any).quaternary,
+        titleSmall: isDark ? (theme.colors as any).quaternaryContainer : (theme.colors as any).quaternary,
 
         bodyLarge: theme.colors.onSurface,
         bodyMedium: theme.colors.onSurface,
