@@ -2,17 +2,21 @@ import { StyleSheet } from "react-native";
 
 export const loginStyles = StyleSheet.create({
     container: {
-        padding: 28,
-        gap: 10,
+        padding: 30,
+        gap: 5,
         minHeight: '100%',
         justifyContent: 'center',
     },
     welcomeTxt: {
         textAlign: 'center',
-        marginTop: 20,
+        marginTop: 60,
+    },
+    descTxt: {
+        textAlign: 'center',
+        marginVertical: 10,
     },
     input: {
-        marginTop: 15,
+        marginTop: 5,
     },
     forgtPwd: {
         textAlign: 'right',

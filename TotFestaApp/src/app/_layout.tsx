@@ -1,8 +1,9 @@
 import { useFonts } from 'expo-font';
-import { Slot } from "expo-router";
+import { Stack } from "expo-router";
 import { useEffect, useState } from 'react';
-import SplashAnimation from '../components/SplashAnimation';
-import { ThemeProvider } from '../providers/ThemeProvider';
+import SplashAnimation from '@/components/SplashAnimation';
+import { ThemeProvider } from '@/providers/ThemeProvider';
+import { AuthProvider } from '@/providers/AuthProvider';
 
 export default function RootLayout() {
   const [showSplash, setShowSplash] = useState(true);
@@ -27,14 +28,19 @@ export default function RootLayout() {
 
 
   return (
-    <ThemeProvider>
-      {showSplash && ready &&
-        (<SplashAnimation onFinish={() => setShowSplash(false)} />)
-      }
-      {!showSplash && (
-        <Slot />
-      )}
-    </ThemeProvider>
-
+    <AuthProvider>
+      <ThemeProvider>
+        {showSplash && ready &&
+          (<SplashAnimation onFinish={() => setShowSplash(false)} />)
+        }
+        {!showSplash && (
+          // <Slot />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="LoginPage" />
+            <Stack.Screen name="(protected)" />
+          </Stack>
+        )}
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
