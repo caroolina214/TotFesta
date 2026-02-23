@@ -33,12 +33,6 @@ export const loginStyles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
-    btnIcon: {
-        position: 'absolute',
-        top: 60,
-        right: 5,
-    },
-
     discoball: {
         // Android
         position: 'absolute',

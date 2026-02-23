@@ -6,4 +6,10 @@ export const GeneralStyles = StyleSheet.create({
         justifyContent: 'center',
         padding: 20,
     },
+
+    btnIconTheme: {
+        position: 'absolute',
+        top: 60,
+        right: 5,
+    },
 });

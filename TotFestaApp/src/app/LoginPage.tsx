@@ -1,25 +1,21 @@
-import React from 'react';
-import { ScrollView, View } from 'react-native';
-import { Divider, useTheme, IconButton } from 'react-native-paper';
 import Btn from '@/components/Btn';
-import TxtInput from '@/components/TxtInput';
-import Txt from '@/components/Txt';
 import DiscoBall from '@/components/DiscoBall';
-import { loginStyles } from '@/styles/LoginPage.styles';
-import { useThemeContext } from '@/providers/ThemeProvider';
-import { useRouter } from "expo-router";
-
-
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, LoginFormValues } from "@/schemas/auth.schema";
+import Txt from '@/components/Txt';
+import TxtInput from '@/components/TxtInput';
 import { useAuth } from "@/providers/AuthProvider";
-import { useState } from "react";
+import { useThemeContext } from '@/providers/ThemeProvider';
+import { LoginFormValues, loginSchema } from "@/schemas/auth.schema";
+import { GeneralStyles } from '@/styles/General.styles';
+import { loginStyles } from '@/styles/LoginPage.styles';
+import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useState } from 'react';
+import { Controller, useForm } from "react-hook-form";
+import { ScrollView, View } from 'react-native';
+import { Divider, IconButton, useTheme } from 'react-native-paper';
 
 export default function LoginPage() {
     const { isDark, setIsDark } = useThemeContext();
     const theme = useTheme();
-    const router = useRouter();
 
     const { logIn } = useAuth();
 
@@ -55,7 +51,7 @@ export default function LoginPage() {
                 icon="theme-light-dark"
                 onPress={() => setIsDark(!isDark)}
                 size={32}
-                style={loginStyles.btnIcon}
+                style={GeneralStyles.btnIconTheme}
                 iconColor={theme.colors.onPrimaryContainer}
             />
 
