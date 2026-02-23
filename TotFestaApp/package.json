@@ -1,7 +1,7 @@
 {
   "name": "totfestaapp",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -11,7 +11,10 @@
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.13.5",
     "expo": "~54.0.33",
+    "expo-constants": "~18.0.13",
     "expo-font": "^14.0.11",
+    "expo-linking": "~8.0.11",
+    "expo-router": "~6.0.23",
     "expo-status-bar": "~3.0.9",
     "lottie-ios": "^4.6.0",
     "lottie-react-native": "^7.3.6",
@@ -20,6 +23,7 @@
     "react-native": "0.81.5",
     "react-native-paper": "^5.15.0",
     "react-native-safe-area-context": "~5.6.0",
+    "react-native-screens": "~4.16.0",
     "react-native-vector-icons": "^10.3.0",
     "react-native-web": "^0.21.0"
   },

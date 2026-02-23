@@ -10,22 +10,24 @@ import TxtInput from '../components/TxtInput';
 import Txt from '../components/Txt';
 import DiscoBall from '../components/DiscoBall';
 import { loginStyles } from '../styles/LoginPage.styles';
+import { useThemeContext } from '../providers/ThemeProvider';
 
-type LoginPageProps = {
-    toggleTheme: () => void;
-};
 
-export default function LoginPage({ toggleTheme }: LoginPageProps) {
-
+export default function LoginPage() {
+    const { isDark, setIsDark } = useThemeContext();
     const theme = useTheme();
 
     return (
-
         <ScrollView contentContainerStyle={loginStyles.container} style={{ backgroundColor: theme.colors.background }}>
-            <IconButton icon="theme-light-dark" style={loginStyles.btnIcon} iconColor={theme.colors.onPrimaryContainer} size={32} onPress={toggleTheme} />
+            <IconButton
+                icon="theme-light-dark"
+                onPress={() => setIsDark(!isDark)}
+                size={32}
+                style={loginStyles.btnIcon}
+                iconColor={theme.colors.onPrimaryContainer}
+            />
 
             <View style={loginStyles.discoball}>
-
                 <DiscoBall size={140} />
             </View>
 
@@ -51,10 +53,7 @@ export default function LoginPage({ toggleTheme }: LoginPageProps) {
                 style={loginStyles.input}
             />
 
-            <Txt
-                variant="labelSmall"
-                style={loginStyles.forgtPwd}
-            >
+            <Txt variant="labelSmall" style={loginStyles.forgtPwd}>
                 Has oblidat la contrassenya?
             </Txt>
 
@@ -64,11 +63,7 @@ export default function LoginPage({ toggleTheme }: LoginPageProps) {
 
             <Divider style={loginStyles.divider} />
 
-            <Btn
-                mode="outlined"
-                icon="google"
-                onPress={() => { }}
-            >
+            <Btn mode="outlined" icon="google" onPress={() => { }} >
                 Iniciar sessió amb Google
             </Btn>
 

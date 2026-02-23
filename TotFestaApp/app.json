@@ -25,6 +25,9 @@
     },
     "web": {
       "favicon": "./assets/firma_logo.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
