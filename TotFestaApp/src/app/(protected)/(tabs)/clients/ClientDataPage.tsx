@@ -26,6 +26,7 @@ export default function ClientDataPage() {
     const [email, setEmail] = useState("");
     const [notes, setNotas] = useState("");
     const [active, setActivo] = useState(true);
+    const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
 
     const nouId = clients.length > 0
         ? Math.max(...clients.map(c => c.id)) + 1
@@ -46,31 +47,59 @@ export default function ClientDataPage() {
 
     //per a guardar el client
     const handleGuardar = async () => {
-        if (isEdit && clientToEdit) {
-            // Actualitzar client existent
-            updateClient({
-                id: clientToEdit.id,
-                fullName,
-                nifCif: nifCif || undefined,
-                phone: phone || undefined,
-                email: email || undefined,
-                notes: notes || undefined,
-                active,
-            });
-        } else {
-            // Crear client nou
-            await createClient({
-                id: nouId,
-                fullName,
-                nifCif: nifCif || undefined,
-                phone: phone || undefined,
-                email: email || undefined,
-                notes: notes || undefined,
-                active,
-            });
-        }
+        try {
 
-        router.back();
+            if (isEdit && clientToEdit) {
+                // Actualitzar client existent
+                await updateClient({
+                    id: clientToEdit.id,
+                    fullName,
+                    nifCif: nifCif || undefined,
+                    phone: phone || undefined,
+                    email: email || undefined,
+                    notes: notes || undefined,
+                    active,
+                });
+            } else {
+                // Crear client nou
+                await createClient({
+                    id: nouId,
+                    fullName,
+                    nifCif: nifCif || undefined,
+                    phone: phone || undefined,
+                    email: email || undefined,
+                    notes: notes || undefined,
+                    active,
+                });
+            }
+
+            router.back();
+        } catch (err: any) {
+            switch (err.code) {
+                case "MISSING_CONTACT":
+                    setFieldErrors({
+                        email: err.message,
+                        phone: err.message
+                    });
+                    break;
+
+                case "INVALID_EMAIL":
+                    setFieldErrors({ email: err.message });
+                    break;
+
+                case "INVALID_PHONE":
+                    setFieldErrors({ phone: err.message });
+                    break;
+
+                case "INVALID_NIFCIF":
+                case "DUPLICATE_NIFCIF":
+                    setFieldErrors({ nifCif: err.message });
+                    break;
+
+                default:
+                    setFieldErrors({ general: err.message || "Error inesperat" });
+            }
+        }
     };
 
     return (
@@ -97,6 +126,8 @@ export default function ClientDataPage() {
                     value={nifCif}
                     onChangeText={setNifCif}
                     mode="outlined"
+                    error={!!fieldErrors.nifCif}
+                    errorText={fieldErrors.nifCif}
                 />
 
                 <TxtInput
@@ -105,6 +136,8 @@ export default function ClientDataPage() {
                     onChangeText={setTelefono}
                     keyboardType="phone-pad"
                     mode="outlined"
+                    error={!!fieldErrors.phone}
+                    errorText={fieldErrors.phone}
                 />
 
                 <TxtInput
@@ -113,6 +146,9 @@ export default function ClientDataPage() {
                     onChangeText={setEmail}
                     keyboardType="email-address"
                     mode="outlined"
+
+                    error={!!fieldErrors.email}
+                    errorText={fieldErrors.email}
                 />
 
                 <TxtInput
