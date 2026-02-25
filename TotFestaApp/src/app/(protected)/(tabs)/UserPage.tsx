@@ -23,7 +23,7 @@ export default function UserPage() {
                 style={GeneralStyles.btnIconTheme}
                 iconColor={theme.colors.onPrimaryContainer}
             />
-            <Txt variant="titleLarge">UserPage</Txt>
+            <Txt variant="displaySmall">UserPage</Txt>
             <Divider style={{ marginVertical: 25 }} />
             <Txt variant="bodyLarge">
                 User Name: {user?.name}
@@ -32,7 +32,7 @@ export default function UserPage() {
                 Rol: {role?.name}
             </Txt>
             <Divider style={{ marginVertical: 25 }} />
-            <Btn mode="contained-tonal" onPress={logOut}>Tancar sessió</Btn>
+            <Btn mode="contained" onPress={logOut}>Tancar sessió</Btn>
         </View>
     );
 }

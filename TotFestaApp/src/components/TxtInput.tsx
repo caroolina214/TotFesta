@@ -22,7 +22,7 @@ export default function TxtInput({ style, theme: overrideTheme, errorText, ...pr
                         background: isDark ? theme.colors.primary : theme.colors.onPrimary,
                     },
                 }}
-                style={[style]}
+                style={[style, props.multiline && { minHeight: 120, textAlignVertical: "top" }]}
             />
             <HelperText type="error" visible={hasError}>
                 {errorText}

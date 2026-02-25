@@ -49,11 +49,13 @@ export default function ClientsPage() {
                 contentContainerStyle={{ alignItems: "center" }}
             />
 
-            <FAB icon="plus" style={{
-                position: "absolute",
-                bottom: 20,
-                right: 20,
-            }}
+            <FAB icon="plus"
+                onPress={() => router.push('/clients/ClientDataPage?mode=create')}
+                style={{
+                    position: "absolute",
+                    bottom: 20,
+                    right: 20,
+                }}
             />
 
         </View>

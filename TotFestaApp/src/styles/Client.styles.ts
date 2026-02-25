@@ -16,14 +16,4 @@ export const ClientStyles = StyleSheet.create({
         fontWeight: 'bold'
     },
 
-    clientCardRow: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-
-    paddingAfterIcon: {
-        paddingLeft: 8
-    },
-
 });

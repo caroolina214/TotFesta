@@ -12,4 +12,13 @@ export const GeneralStyles = StyleSheet.create({
         top: 60,
         right: 5,
     },
+
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
+    paddingTextAfterIcon: {
+        paddingLeft: 8
+    },
 });

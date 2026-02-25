@@ -9,11 +9,11 @@ export default function BottomMenuTabsLayout() {
     return (
         <Tabs screenOptions={{
             headerShown: false,
-            tabBarActiveTintColor: isDark ? theme.colors.tertiary : theme.colors.secondary,
-            tabBarInactiveTintColor: isDark ? theme.colors.onTertiaryContainer : theme.colors.surfaceVariant,
+            tabBarActiveTintColor: isDark ? (theme.colors as any).onQuinary : (theme.colors as any).quinary,
+            tabBarInactiveTintColor: theme.colors.surfaceVariant,
             tabBarStyle: {
-                backgroundColor: isDark ? theme.colors.surfaceVariant : theme.colors.onSecondary,
-                borderTopColor: isDark ? theme.colors.surfaceVariant : theme.colors.onSecondary,
+                backgroundColor: isDark ? (theme.colors as any).onQuinaryContainer : (theme.colors as any).quinaryContainer,
+                borderTopColor: isDark ? (theme.colors as any).onQuinaryContainer : (theme.colors as any).quinaryContainer,
             },
 
         }}>
@@ -28,7 +28,7 @@ export default function BottomMenuTabsLayout() {
             />
 
             <Tabs.Screen
-                name="clients/ClientsListPage"
+                name="clients"
                 options={{
                     title: "Clients",
                     tabBarIcon: ({ color, size }) => (

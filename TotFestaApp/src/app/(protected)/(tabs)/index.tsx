@@ -8,7 +8,7 @@ export default function HomePage() {
     const theme = useTheme();
     return (
         <View style={[GeneralStyles.body, { backgroundColor: theme.colors.background }]}>
-            <Txt variant="titleLarge">HomePage</Txt>
+            <Txt variant="displaySmall">HomePage</Txt>
         </View>
     );
 }
