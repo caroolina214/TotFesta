@@ -1,6 +1,6 @@
-import Btn from '@/components/Btn';
-import OrderCard from '@/components/OrderCard';
-import Txt from '@/components/Txt';
+import Btn from '@/components/common/Btn';
+import OrderCard from '@/components/cards/OrderCard';
+import Txt from '@/components/common/Txt';
 import { deleteClient } from '@/services/client.service';
 import { getOrdersByClient } from '@/services/order.service';
 import { GeneralStyles } from '@/styles/General.styles';

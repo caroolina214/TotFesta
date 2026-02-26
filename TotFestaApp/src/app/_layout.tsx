@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { Stack } from "expo-router";
 import { useEffect, useState } from 'react';
-import SplashAnimation from '@/components/SplashAnimation';
+import SplashAnimation from '@/components/common/SplashAnimation';
 import { ThemeProvider } from '@/providers/ThemeProvider';
 import { AuthProvider } from '@/providers/AuthProvider';
 

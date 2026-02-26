@@ -1,5 +1,5 @@
 import { FlatList, View } from "react-native";
-import Txt from "../../../../components/Txt";
+import Txt from "../../../../components/common/Txt";
 import { GeneralStyles } from "../../../../styles/General.styles";
 import { Divider, FAB, Searchbar, useTheme } from "react-native-paper";
 import { useRouter, useFocusEffect } from "expo-router";

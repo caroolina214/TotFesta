@@ -1,10 +1,10 @@
-import Btn from '@/components/Btn';
+import Btn from '@/components/common/Btn';
 import { useAuth } from '@/providers/AuthProvider';
 import { useThemeContext } from '@/providers/ThemeProvider';
 import React from 'react';
 import { View } from 'react-native';
 import { Divider, IconButton, useTheme } from 'react-native-paper';
-import Txt from '../../../components/Txt';
+import Txt from '../../../components/common/Txt';
 import { GeneralStyles } from '../../../styles/General.styles';
 
 export default function UserPage() {

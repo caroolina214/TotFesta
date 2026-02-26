@@ -1,6 +1,6 @@
-import DiscoBall from '@/components/DiscoBall';
-import OrderCard from '@/components/OrderCard';
-import Txt from '@/components/Txt';
+import DiscoBall from '@/components/common/DiscoBall';
+import OrderCard from '@/components/cards/OrderCard';
+import Txt from '@/components/common/Txt';
 
 import { getAllOrders } from '@/services/order.service';
 import { GeneralStyles } from '@/styles/General.styles';

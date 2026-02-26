@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { Order } from "@/types/Order";
 import { GeneralStyles } from "@/styles/General.styles";
-import Txt from "./Txt";
+import Txt from "../common/Txt";
 
 interface OrderProps {
     order: Order;

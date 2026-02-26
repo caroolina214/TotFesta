@@ -3,9 +3,9 @@ import { ScrollView, View } from 'react-native';
 import { Text, Checkbox, useTheme } from 'react-native-paper';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { createClient, updateClient } from '@/services/client.service';
-import TxtInput from '@/components/TxtInput';
+import TxtInput from '@/components/common/TxtInput';
 import { clients } from '@/types/mocks/client.mock';
-import Btn from '@/components/Btn';
+import Btn from '@/components/common/Btn';
 
 type Item = {
     key: string

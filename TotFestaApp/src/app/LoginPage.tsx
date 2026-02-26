@@ -1,52 +1,24 @@
-import Btn from '@/components/Btn';
-import DiscoBall from '@/components/DiscoBall';
-import Txt from '@/components/Txt';
-import TxtInput from '@/components/TxtInput';
-import { useAuth } from "@/providers/AuthProvider";
+import DiscoBall from '@/components/common/DiscoBall';
+import Txt from '@/components/common/Txt';
+import LoginForm from '@/components/forms/LoginForm';
+
 import { useThemeContext } from '@/providers/ThemeProvider';
-import { LoginFormValues, loginSchema } from "@/schemas/auth.schema";
 import { GeneralStyles } from '@/styles/General.styles';
 import { loginStyles } from '@/styles/LoginPage.styles';
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from 'react';
-import { Controller, useForm } from "react-hook-form";
+
+import React from 'react';
 import { ScrollView, View } from 'react-native';
-import { Divider, IconButton, useTheme } from 'react-native-paper';
+import { IconButton, useTheme } from 'react-native-paper';
 
 export default function LoginPage() {
     const { isDark, setIsDark } = useThemeContext();
     const theme = useTheme();
 
-    const { logIn } = useAuth();
-
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginFormValues>({
-        resolver: zodResolver(loginSchema),
-        defaultValues: {
-            email: "",
-            password: "",
-        },
-    });
-
-    const [authError, setAuthError] = useState<string | null>(null);
-
-    const onSubmit = async (data: LoginFormValues) => {
-        setAuthError(null);
-
-        try {
-            await logIn(data.email, data.password);
-            // El provider farà la redirecció automàtica
-        } catch (err: any) {
-            setAuthError(err.message || "Error inesperat");
-        }
-    };
-
-
     return (
-        <ScrollView contentContainerStyle={loginStyles.container} style={{ backgroundColor: theme.colors.background }}>
+        <ScrollView contentContainerStyle={loginStyles.container}
+            style={{ backgroundColor: theme.colors.background }}
+            keyboardShouldPersistTaps="handled"
+        >
             <IconButton
                 icon="theme-light-dark"
                 onPress={() => setIsDark(!isDark)}
@@ -67,65 +39,8 @@ export default function LoginPage() {
                 Introdueix l'usuari i la contrasenya per a iniciar sessió
             </Txt>
 
-            <Controller
-                control={control}
-                name="email"
-                render={({ field: { value, onChange, onBlur } }) => (
-                    <TxtInput
-                        label="Username"
-                        mode="outlined"
-                        autoComplete="email"
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        style={loginStyles.input}
-                        error={!!errors.email}
-                        errorText={errors.email?.message}
-                    />
-                )}
-            />
+            <LoginForm />
 
-            <Controller
-                control={control}
-                name="password"
-                render={({ field: { value, onChange, onBlur } }) => (
-                    <TxtInput
-                        label="Password"
-                        mode="outlined"
-                        secureTextEntry
-                        style={loginStyles.input}
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        error={!!errors.password}
-                        errorText={errors.password?.message}
-                    />
-                )}
-            />
-
-            <Txt variant="labelSmall" style={loginStyles.forgtPwd}>
-                Has oblidat la contrasenya?
-            </Txt>
-
-            <Btn mode="contained" onPress={handleSubmit(onSubmit)}>
-                Iniciar sessió
-            </Btn>
-            {authError && (
-                <Txt variant="labelSmall" style={{ color: theme.colors.error }}>
-                    {authError}
-                </Txt>
-            )}
-
-            <Divider style={GeneralStyles.divider} />
-
-            <Btn mode="outlined" icon="google" >
-                Iniciar sessió amb Google
-            </Btn>
-
-            <Txt style={loginStyles.registerTxt}>
-                No tens compte?
-                <Txt variant="titleSmall" style={loginStyles.registerLink}> Registra't</Txt>
-            </Txt>
         </ScrollView>
     );
 }
