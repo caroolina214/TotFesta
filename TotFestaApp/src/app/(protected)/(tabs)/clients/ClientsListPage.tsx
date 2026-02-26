@@ -1,14 +1,12 @@
-import { FlatList, View } from "react-native";
-import Txt from "../../../../components/common/Txt";
-import { GeneralStyles } from "../../../../styles/General.styles";
-import { Divider, FAB, Searchbar, useTheme } from "react-native-paper";
-import { useRouter, useFocusEffect } from "expo-router";
-import React, { useState } from "react";
+import ClientCard from "@/components/cards/ClientCard";
 import { getClients } from "@/services/client.service";
 import { Client } from "@/types/Client";
-import ClientCard from "@/components/ClientCard";
-import { transparent } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
-
+import { useFocusEffect, useRouter } from "expo-router";
+import React, { useState } from "react";
+import { FlatList, View } from "react-native";
+import { Divider, FAB, Searchbar, useTheme } from "react-native-paper";
+import Txt from "../../../../components/common/Txt";
+import { GeneralStyles } from "../../../../styles/General.styles";
 
 export default function ClientsPage() {
     const theme = useTheme();

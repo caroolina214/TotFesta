@@ -1,18 +1,20 @@
 import Btn from '@/components/common/Btn';
-import { useAuth } from '@/providers/AuthProvider';
 import { useThemeContext } from '@/providers/ThemeProvider';
 import React from 'react';
 import { View } from 'react-native';
 import { Divider, IconButton, useTheme } from 'react-native-paper';
-import Txt from '../../../components/common/Txt';
-import { GeneralStyles } from '../../../styles/General.styles';
+import Txt from '@/components/common/Txt';
+import { GeneralStyles } from '@/styles/General.styles';
+import { useAuth } from '@/hooks/useAuth';
+import { useUserStore } from '@/stores/user.store';
 
 export default function UserPage() {
-    const { user, role, logOut } = useAuth();
+    const user = useUserStore.use.user();
+    const role = useUserStore.use.role();
+    const { logOut } = useAuth();
 
     const { isDark, setIsDark } = useThemeContext();
     const theme = useTheme();
-
 
     return (
         <View style={[GeneralStyles.body, { backgroundColor: theme.colors.background }]}>

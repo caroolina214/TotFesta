@@ -41,14 +41,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             : true
     );
 
+    const [isAuthReady, setIsAuthReady] = useState(false);
+
+    // Quan el store està hidratat → ja podem navegar
+    const isReady = isHydrated && isAuthReady;
+
     // useEffect es un hook de React que s’executa després de 
     // renderitzar el component o quan canvien les dependències
 
     // Este en concret el que fa es avisar quan zustand acaba de
     // carregar l'estat guardat. S'executa quan canvia isHydrated
     useEffect(() => {
-        if (isHydrated) return;
+        if (!isHydrated) return;
 
+        setIsAuthReady(true);
         const unsub =
             typeof useUserStore.persist?.onFinishHydration === "function"
                 ? useUserStore.persist.onFinishHydration(() => setIsHydrated(true))
@@ -59,8 +65,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
     }, [isHydrated]);
 
-    // Quan el store està hidratat → ja podem navegar
-    const isReady = isHydrated;
 
     // Navegació protegida (redireccions automàtiques)
     useEffect(() => {

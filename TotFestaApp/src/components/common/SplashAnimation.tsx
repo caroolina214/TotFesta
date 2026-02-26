@@ -19,7 +19,7 @@ export default function SplashAnimation({ onFinish }: { onFinish: () => void }) 
     return (
         <Animated.View style={[styles.container, { opacity }]}>
             <LottieView
-                source={require("../../assets/animations/disco-ball.json")}
+                source={require("../../../assets/animations/disco-ball.json")}
                 autoPlay
                 loop
                 style={{ width: 220, height: 220 }}

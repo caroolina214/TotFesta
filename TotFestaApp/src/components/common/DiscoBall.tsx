@@ -15,7 +15,7 @@ export default function DiscoBall({ size = 200 }) {
         <TouchableOpacity onPress={play} activeOpacity={0.8}>
             <LottieView
                 ref={animationRef}
-                source={require("../../assets/animations/disco-ball.json")}
+                source={require("../../../assets/animations/disco-ball.json")}
                 autoPlay={false}
                 loop={false}
                 style={{ width: size, height: size }}

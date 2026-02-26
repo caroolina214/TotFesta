@@ -26,20 +26,17 @@ export default function RootLayout() {
 
   const ready = fontsLoaded && dataLoaded;
 
+  if (!ready) {
+    return <SplashAnimation onFinish={() => setShowSplash(false)} />
+  }
 
   return (
     <AuthProvider>
       <ThemeProvider>
-        {showSplash && ready &&
-          (<SplashAnimation onFinish={() => setShowSplash(false)} />)
-        }
-        {!showSplash && (
-          // <Slot />
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="LoginPage" />
-            <Stack.Screen name="(protected)" />
-          </Stack>
-        )}
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="LoginPage" />
+          <Stack.Screen name="(protected)" />
+        </Stack>
       </ThemeProvider>
     </AuthProvider>
   );
