@@ -23,16 +23,21 @@ export default function UserPage() {
                 style={GeneralStyles.btnIconTheme}
                 iconColor={theme.colors.onPrimaryContainer}
             />
-            <Txt variant="displaySmall">UserPage</Txt>
-            <Divider style={{ marginVertical: 25 }} />
-            <Txt variant="bodyLarge">
-                User Name: {user?.name}
-            </Txt>
-            <Txt variant="bodyLarge">
-                Rol: {role?.name}
-            </Txt>
-            <Divider style={{ marginVertical: 25 }} />
-            <Btn mode="contained" onPress={logOut}>Tancar sessió</Btn>
+            <View style={{ flex: 1, justifyContent: 'space-evenly' }}>
+                <View>
+                    <Txt variant="displaySmall">UserPage</Txt>
+                    <Divider style={GeneralStyles.divider} />
+                    <View style={{ marginTop: 25 }}>
+                        <Txt variant="bodyLarge">
+                            User Name: {user?.name}
+                        </Txt>
+                        <Txt variant="bodyLarge">
+                            Rol: {role?.name}
+                        </Txt>
+                    </View>
+                </View>
+                <Btn mode="contained" onPress={logOut}>Tancar sessió</Btn>
+            </View>
         </View>
     );
 }

@@ -1,11 +1,13 @@
 import Btn from '@/components/Btn';
+import OrderCard from '@/components/OrderCard';
 import Txt from '@/components/Txt';
 import { deleteClient } from '@/services/client.service';
+import { getOrdersByClient } from '@/services/order.service';
 import { GeneralStyles } from '@/styles/General.styles';
 import { clients } from '@/types/mocks/client.mock';
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { Button, Dialog, Divider, FAB, Icon, IconButton, Portal, useTheme } from 'react-native-paper';
 
 export default function DetallClient() {
@@ -18,7 +20,9 @@ export default function DetallClient() {
     const { id } = useLocalSearchParams();
     const [client, setClient] = useState<any | null>(null);
 
-    // const client = clients.find(c => c.id === Number(id));
+    const orders = getOrdersByClient(Number(id));
+    const [errorVisible, setErrorVisible] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     useEffect(() => {
         const c = clients.find(c => c.id === Number(id));
@@ -42,10 +46,27 @@ export default function DetallClient() {
     const hideDialog = () => setVisible(false);
 
     const handleDelete = async () => {
-        const ok = await deleteClient(client.id);
-        if (ok) {
-            hideDialog();
-            router.back();
+        try {
+            const ok = await deleteClient(client.id);
+
+            if (ok) {
+                hideDialog();
+                router.back();
+            }
+
+        } catch (err: any) {
+            if (err.code === "CLIENT_HAS_ORDERS") {
+                hideDialog();
+                // alert(err.message); 
+                setErrorMsg(err.message);
+                setErrorVisible(true);
+            } else {
+                console.error(err);
+                // alert("Error inesperat eliminant el client.");
+                setErrorMsg("Error inesperat eliminant el client.");
+                setErrorVisible(true);
+
+            }
         }
     };
 
@@ -70,7 +91,7 @@ export default function DetallClient() {
             <View style={{ padding: 25, backgroundColor: theme.colors.background, height: '100%' }}>
                 <Txt variant='headlineSmall' style={{ marginTop: 20 }}>{client.fullName}</Txt>
 
-                <Divider style={{ marginVertical: 10, height: 1.5 }} />
+                <Divider style={GeneralStyles.divider} />
 
                 {/* NIF/CIF */}
                 {client.nifCif && (
@@ -110,7 +131,48 @@ export default function DetallClient() {
                     <Txt variant='bodyLarge' style={GeneralStyles.paddingTextAfterIcon}>Actiu: {client.active ? "Sí" : "No"} </Txt>
                 </View>
 
+                {/* PEDIDOS */}
+                <View style={{ marginTop: 50, }}>
+                    <View style={{ flexDirection: 'row', alignItems: "center" }}>
 
+                        <Divider style={[GeneralStyles.divider, { flex: 1, marginRight: 5 }]} />
+                        <Txt variant="labelLarge" style={{ marginBottom: 10 }}>
+                            Pedidos del client
+                        </Txt>
+                        <Divider style={[GeneralStyles.divider, { flex: 1, marginLeft: 5 }]} />
+                    </View>
+                    <ScrollView style={{ marginTop: 10 }}>
+
+                        {orders.length === 0 && (
+                            <Text>No hi ha pedidos per a este client.</Text>
+                        )}
+
+                        {orders.map(p => (
+                            <OrderCard key={p.id} order={p} />
+                        ))}
+                    </ScrollView>
+                </View>
+
+                <Portal>
+                    <Dialog
+                        visible={errorVisible}
+                        onDismiss={() => setErrorVisible(false)}
+                        style={{ backgroundColor: theme.colors.onPrimary }}>
+                        <Dialog.Title style={{ color: theme.colors.error }}>
+                            Error
+                        </Dialog.Title>
+
+                        <Dialog.Content>
+                            <Text>{errorMsg}</Text>
+                        </Dialog.Content>
+
+                        <Dialog.Actions>
+                            <Button onPress={() => setErrorVisible(false)} textColor={theme.colors.primary}>
+                                Tancar
+                            </Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
                 <Portal>
                     <Dialog style={{ backgroundColor: theme.colors.onPrimary }} visible={visible} onDismiss={hideDialog} >
                         <Dialog.Title style={{ color: theme.colors.primary }}>Confirmació</Dialog.Title>
@@ -119,7 +181,7 @@ export default function DetallClient() {
                         </Dialog.Content>
                         <Dialog.Actions>
                             <Button onPress={hideDialog} textColor={theme.colors.primary}>Cancel·lar</Button>
-                            <Button onPress={handleDelete} textColor="#d90429">
+                            <Button onPress={handleDelete} textColor={theme.colors.error}>
                                 Eliminar
                             </Button>
                         </Dialog.Actions>

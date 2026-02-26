@@ -1,4 +1,3 @@
-import { ClientStyles } from '@/styles/Client.styles';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Icon, useTheme } from 'react-native-paper';
@@ -23,29 +22,22 @@ export default function ClientCard({ client }: ClientCardProps) {
     return (
         <TouchableOpacity onPress={() => router.push(`clients/${client.id}`)} >
             <View style={[
-                ClientStyles.clientCard,
+                GeneralStyles.card,
                 {
                     borderColor: isDark ? theme.colors.secondaryContainer : theme.colors.onSecondaryContainer,
                     backgroundColor: isDark ? theme.colors.onSecondaryContainer : theme.colors.secondaryContainer
                 }
-            ]}
-            >
-                <Txt
-                    variant='headlineSmall'
+            ]}>
+                <Txt variant='headlineSmall'
                     style={[
-                        ClientStyles.clientCardTitle,
-                        {
-                            fontSize: 22,
-                            color: theme.colors.onSurface,
-                        }]}
-                >
+                        GeneralStyles.cardTitle,
+                        { fontSize: 22, color: theme.colors.onSurface, }
+                    ]}>
                     {client.fullName}
                 </Txt>
                 {client.phone && (
                     <View style={GeneralStyles.row}>
-                        <Icon
-                            source={'phone'}
-                            size={20}
+                        <Icon source={'phone'} size={20}
                             color={isDark ? theme.colors.secondaryContainer : theme.colors.onSecondaryContainer}
                         />
 
@@ -56,9 +48,7 @@ export default function ClientCard({ client }: ClientCardProps) {
                 )}
                 {client.email && (
                     <View style={GeneralStyles.row}>
-                        <Icon
-                            source={'email'}
-                            size={20}
+                        <Icon source={'email'} size={20}
                             color={isDark ? theme.colors.secondaryContainer : theme.colors.onSecondaryContainer}
                         />
                         <Txt variant='bodyLarge' style={GeneralStyles.paddingTextAfterIcon}>

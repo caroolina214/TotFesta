@@ -1,5 +1,6 @@
 import { Client } from "@/types/Client";
 import { clients } from "@/types/mocks/client.mock";
+import { orders } from "@/types/mocks/order.mock";
 
 // Validacions
 
@@ -108,6 +109,14 @@ export const updateClient = async (payload: Client): Promise<Client | undefined>
 
 
 export const deleteClient = async (id: number): Promise<boolean> => {
+    const hasOrders = orders.some(o => o.clientId === id);
+    if (hasOrders) {
+        throw {
+            code: "CLIENT_HAS_ORDERS",
+            message: "No es pot eliminar un client amb pedidos associats."
+        };
+    }
+
     const index = clients.findIndex(c => c.id === id);
     let ok = false;
 

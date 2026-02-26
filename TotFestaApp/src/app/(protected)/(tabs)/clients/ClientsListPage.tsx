@@ -37,9 +37,9 @@ export default function ClientsPage() {
     return (
         <View style={[GeneralStyles.body, { backgroundColor: theme.colors.background }]}>
             <Txt variant="headlineMedium" style={{ marginTop: 40 }}>Llistat de Clients</Txt>
-            <Divider style={{ marginVertical: 15, height: 1.5 }} />
+            <Divider style={GeneralStyles.divider} />
             <Searchbar
-                placeholder="Buscar client per nom..."
+                placeholder="Buscar client ..."
                 value={searchQuery}
                 onChangeText={setSearchQuery}
                 style={{ marginBottom: 10, backgroundColor: theme.colors.inversePrimary }}

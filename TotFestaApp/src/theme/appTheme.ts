@@ -31,7 +31,7 @@ export const lightTheme = {
         "quinaryContainer": AppColors.FucsiaClar,
         "onQuinaryContainer": AppColors.FucsiaObscur,
 
-        "error": "#990000",
+        "error": "#cc0000",
         "onError": AppColors.BaseClar,
         "errorContainer": "#ffe6e6",
         "onErrorContainer": "#400000",

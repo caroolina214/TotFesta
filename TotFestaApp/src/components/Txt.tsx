@@ -12,7 +12,7 @@ export default function Txt({ variant = "bodyMedium", style, ...props }: TxtProp
         displayMedium: isDark ? (theme.colors as any).onQuinary : (theme.colors as any).quinary,
         displaySmall: isDark ? (theme.colors as any).onQuinary : (theme.colors as any).quinary,
 
-        headlineLarge: isDark ? theme.colors.onPrimary : theme.colors.primary,
+        headlineLarge: isDark ? theme.colors.onPrimaryContainer : theme.colors.primary,
         headlineMedium: isDark ? theme.colors.onPrimaryContainer : theme.colors.primary,
         headlineSmall: isDark ? theme.colors.onPrimaryContainer : theme.colors.primary,
 

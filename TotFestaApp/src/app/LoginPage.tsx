@@ -116,7 +116,7 @@ export default function LoginPage() {
                 </Txt>
             )}
 
-            <Divider style={loginStyles.divider} />
+            <Divider style={GeneralStyles.divider} />
 
             <Btn mode="outlined" icon="google" >
                 Iniciar sessió amb Google

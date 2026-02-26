@@ -22,9 +22,7 @@ export const loginStyles = StyleSheet.create({
         textAlign: 'right',
         marginBottom: 25,
     },
-    divider: {
-        marginVertical: 15,
-    },
+
     registerTxt: {
         marginTop: 15,
         textAlign: 'center',
