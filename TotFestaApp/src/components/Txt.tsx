@@ -8,9 +8,9 @@ export default function Txt({ variant = "bodyMedium", style, ...props }: TxtProp
     const isDark = theme.dark;
 
     const colorByVariant: Record<string, string> = {
-        displayLarge: (theme.colors as any).quinary,
-        displayMedium: (theme.colors as any).quinary,
-        displaySmall: (theme.colors as any).quinary,
+        displayLarge: isDark ? (theme.colors as any).onQuinary : (theme.colors as any).quinary,
+        displayMedium: isDark ? (theme.colors as any).onQuinary : (theme.colors as any).quinary,
+        displaySmall: isDark ? (theme.colors as any).onQuinary : (theme.colors as any).quinary,
 
         headlineLarge: isDark ? theme.colors.onPrimary : theme.colors.primary,
         headlineMedium: isDark ? theme.colors.onPrimaryContainer : theme.colors.primary,

@@ -41,26 +41,31 @@ export default function ClientCard({ client }: ClientCardProps) {
                 >
                     {client.fullName}
                 </Txt>
-                <View style={GeneralStyles.row}>
-                    <Icon
-                        source={'phone'}
-                        size={20}
-                        color={isDark ? theme.colors.secondaryContainer : theme.colors.onSecondaryContainer}
-                    />
-                    <Txt variant='bodyLarge' style={GeneralStyles.paddingTextAfterIcon}>
-                        {client.phone}
-                    </Txt>
-                </View>
-                <View style={GeneralStyles.row}>
-                    <Icon
-                        source={'email'}
-                        size={20}
-                        color={isDark ? theme.colors.secondaryContainer : theme.colors.onSecondaryContainer}
-                    />
-                    <Txt variant='bodyLarge' style={GeneralStyles.paddingTextAfterIcon}>
-                        {client.email}
-                    </Txt>
-                </View>
+                {client.phone && (
+                    <View style={GeneralStyles.row}>
+                        <Icon
+                            source={'phone'}
+                            size={20}
+                            color={isDark ? theme.colors.secondaryContainer : theme.colors.onSecondaryContainer}
+                        />
+
+                        <Txt variant='bodyLarge' style={GeneralStyles.paddingTextAfterIcon}>
+                            {client.phone}
+                        </Txt>
+                    </View>
+                )}
+                {client.email && (
+                    <View style={GeneralStyles.row}>
+                        <Icon
+                            source={'email'}
+                            size={20}
+                            color={isDark ? theme.colors.secondaryContainer : theme.colors.onSecondaryContainer}
+                        />
+                        <Txt variant='bodyLarge' style={GeneralStyles.paddingTextAfterIcon}>
+                            {client.email}
+                        </Txt>
+                    </View>
+                )}
             </View>
         </TouchableOpacity >
     );

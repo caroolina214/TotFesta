@@ -1,3 +1,4 @@
+import Btn from '@/components/Btn';
 import Txt from '@/components/Txt';
 import { deleteClient } from '@/services/client.service';
 import { GeneralStyles } from '@/styles/General.styles';
@@ -5,11 +6,12 @@ import { clients } from '@/types/mocks/client.mock';
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import { Button, Dialog, Divider, FAB, Icon, Portal, useTheme } from 'react-native-paper';
+import { Button, Dialog, Divider, FAB, Icon, IconButton, Portal, useTheme } from 'react-native-paper';
 
 export default function DetallClient() {
 
     const theme = useTheme();
+    const isDark = theme.dark;
     const router = useRouter();
     const [visible, setVisible] = useState(false);
 
@@ -61,13 +63,14 @@ export default function DetallClient() {
                     headerTitleStyle: {
                         color: theme.colors.onSurface,            // color del títol
                     },
+                    headerShadowVisible: true,
                 }}
 
             />
             <View style={{ padding: 25, backgroundColor: theme.colors.background, height: '100%' }}>
                 <Txt variant='headlineSmall' style={{ marginTop: 20 }}>{client.fullName}</Txt>
 
-                <Divider style={{ marginVertical: 10 }} />
+                <Divider style={{ marginVertical: 10, height: 1.5 }} />
 
                 {/* NIF/CIF */}
                 {client.nifCif && (
@@ -123,17 +126,28 @@ export default function DetallClient() {
                     </Dialog>
                 </Portal>
             </View>
-            <FAB
+            <IconButton
                 icon="pencil"
-                style={{ position: "absolute", bottom: 100, right: 20 }}
                 onPress={handleEdit}
+                size={28}
+                style={[GeneralStyles.btnIconTheme, { position: "absolute", top: 35, right: 70 }]}
+                iconColor={
+                    isDark ?
+                        (theme.colors as any).onQuaternary
+                        : (theme.colors as any).quaternary}
             />
 
-            <FAB
+            <IconButton
                 icon="delete"
-                style={{ position: "absolute", bottom: 20, right: 20 }}
                 onPress={showDialog}
+                size={28}
+                style={[GeneralStyles.btnIconTheme, { position: "absolute", top: 35, right: 20 }]}
+                iconColor={
+                    isDark ?
+                        (theme.colors as any).onQuaternary
+                        : (theme.colors as any).quaternary}
             />
+
         </>
     );
 }
