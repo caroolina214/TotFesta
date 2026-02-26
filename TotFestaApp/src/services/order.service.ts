@@ -1,9 +1,9 @@
 import { orders } from "@/types/mocks/order.mock";
 
-export function getAllOrders() {
-    return orders;
+export async function getAllOrders() {
+    return Promise.resolve(orders);
 }
 
-export function getOrdersByClient(clientId: number) {
-    return orders.filter(o => o.clientId === clientId);
+export async function getOrdersByClient(clientId: number) {
+    return Promise.resolve(orders.filter(o => o.clientId === clientId));
 }
