@@ -1,14 +1,11 @@
-import { createContext, useContext, useState, useMemo, useEffect } from "react";
-import { useRouter, useSegments } from "expo-router";
-import type { User, Role } from "@/types/User";
 import { loginMocks } from "@/services/auth.service";
+import { useUserStore } from "@/stores/user.store";
+import { useRouter, useSegments } from "expo-router";
+import { createContext, useEffect, useMemo, useState } from "react";
 
 type AuthContextType = {
     isReady: boolean;
     isLoggedIn: boolean;
-    user: User | null;
-    role: Role | null;
-    token: string | null;
     logIn: (email: string, password: string) => Promise<void>;
     logOut: () => void;
 };
@@ -16,9 +13,6 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType>({
     isReady: false,
     isLoggedIn: false,
-    user: null,
-    role: null,
-    token: null,
     logIn: async () => { },
     logOut: () => { },
 });
@@ -27,20 +21,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const segments = useSegments();
 
-    // Estat global
-    const [user, setUser] = useState<User | null>(null);
-    const [role, setRole] = useState<Role | null>(null);
-    const [token, setToken] = useState<string | null>(null);
+    // llegim l'estat de zustand
+    const user = useUserStore.use.user();
+    const role = useUserStore.use.role();
+    const token = useUserStore.use.token();
+    const setUserStore = useUserStore.use.setUser();
+    const clearUserStore = useUserStore.use.clearUser();
 
+    // estat derivat -> useMemo es per a memoritzar un valor calculat
+    // en este cas, calcula si hi ha user i si hi ha token -> true
+    // si falta alguno -> false
+    // es recalcula cada vegada que canvia user o token
     const isLoggedIn = useMemo(() => Boolean(user && token), [user, token]);
-    const [isReady, setIsReady] = useState(false);
 
-    // Simula "carregar sessió" ja encara no hi ha persistencia
+    // Hidratació del store -> es per a carregar l'estat persistent dins del store
+    const [isHydrated, setIsHydrated] = useState(
+        typeof useUserStore.persist?.hasHydrated === "function"
+            ? useUserStore.persist.hasHydrated()
+            : true
+    );
+
+    // useEffect es un hook de React que s’executa després de 
+    // renderitzar el component o quan canvien les dependències
+
+    // Este en concret el que fa es avisar quan zustand acaba de
+    // carregar l'estat guardat. S'executa quan canvia isHydrated
     useEffect(() => {
-        setIsReady(true);
-    }, []);
+        if (isHydrated) return;
 
-    // Redireccions automàtiques
+        const unsub =
+            typeof useUserStore.persist?.onFinishHydration === "function"
+                ? useUserStore.persist.onFinishHydration(() => setIsHydrated(true))
+                : null;
+
+        return () => {
+            if (typeof unsub === "function") unsub();
+        };
+    }, [isHydrated]);
+
+    // Quan el store està hidratat → ja podem navegar
+    const isReady = isHydrated;
+
+    // Navegació protegida (redireccions automàtiques)
     useEffect(() => {
         if (!isReady) return;
 
@@ -59,38 +81,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Funció de login (crida al service)
     const logIn = async (email: string, password: string) => {
         const session = await loginMocks(email, password);
-
-        setUser(session.user);
-        setRole(session.role);
-        setToken(session.token);
-
-        // El provider ja farà la redirecció automàtica
+        setUserStore(session.user, session.role, session.token);
     };
 
     // Funció de logout
     const logOut = () => {
-        setUser(null);
-        setRole(null);
-        setToken(null);
+        clearUserStore();
         router.replace("/LoginPage");
     };
 
     return (
-        <AuthContext.Provider
-            value={{
-                isReady,
-                isLoggedIn,
-                user,
-                role,
-                token,
-                logIn,
-                logOut,
-            }}
-        >
+        <AuthContext.Provider value={{ isReady, isLoggedIn, logIn, logOut, }}>
             {children}
         </AuthContext.Provider>
     );
 }
-
-// Hook per a usar el context
-export const useAuth = () => useContext(AuthContext);
