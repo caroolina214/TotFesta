@@ -36,7 +36,7 @@ export default function BottomMenuTabsLayout() {
                     ),
                 }}
             />
-
+            {/* 
             <Tabs.Screen
                 name="UserPage"
                 options={{
@@ -45,7 +45,7 @@ export default function BottomMenuTabsLayout() {
                         <Icon source="account-circle-outline" color={color} size={size} />
                     ),
                 }}
-            />
+            /> */}
 
         </Tabs>
     );

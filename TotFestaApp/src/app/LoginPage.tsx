@@ -11,22 +11,14 @@ import { ScrollView, View } from 'react-native';
 import { IconButton, useTheme } from 'react-native-paper';
 
 export default function LoginPage() {
-    const { isDark, setIsDark } = useThemeContext();
+    const { themeMode, setThemeMode } = useThemeContext();
     const theme = useTheme();
 
     return (
-        <ScrollView contentContainerStyle={loginStyles.container}
+        <ScrollView contentContainerStyle={GeneralStyles.body}
             style={{ backgroundColor: theme.colors.background }}
             keyboardShouldPersistTaps="handled"
         >
-            <IconButton
-                icon="theme-light-dark"
-                onPress={() => setIsDark(!isDark)}
-                size={32}
-                style={GeneralStyles.btnIconTheme}
-                iconColor={theme.colors.onPrimaryContainer}
-            />
-
             <View style={loginStyles.discoball}>
                 <DiscoBall size={140} />
             </View>

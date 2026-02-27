@@ -1,17 +1,19 @@
-import DiscoBall from '@/components/common/DiscoBall';
 import OrderCard from '@/components/cards/OrderCard';
+import WelcomeCard from '@/components/cards/WelcomeCard';
+import DiscoBall from '@/components/common/DiscoBall';
 import Txt from '@/components/common/Txt';
-
 import { getAllOrders } from '@/services/order.service';
+import { useUserStore } from '@/stores/user.store';
 import { GeneralStyles } from '@/styles/General.styles';
 import { Order } from '@/types/Order';
-
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import { Divider, Icon, useTheme } from 'react-native-paper';
 
 export default function HomePage() {
     const theme = useTheme();
+    const user = useUserStore.use.user();
 
     const [orders, setOrders] = useState<Order[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -86,18 +88,33 @@ export default function HomePage() {
             ;
     }
 
-    return (
-        <View style={[GeneralStyles.body, { flex: 1, backgroundColor: theme.colors.background }]}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <DiscoBall />
-                <Txt variant="displaySmall" style={{ textAlign: 'center', marginTop: 5, marginBottom: 15 }}>Inici</Txt>
-            </View>
-            <Txt variant="headlineSmall" style={{ textAlign: 'center' }}>Llistat de Pedidos</Txt>
-            <Divider style={GeneralStyles.divider} />
+    var labelUserName;
 
-            <View style={{ flex: 1 }}>
-                {content}
+    if (!user) {
+        labelUserName = ""
+    } else {
+        labelUserName = user.name;
+    }
+
+    return (
+        <View style={[
+            GeneralStyles.body,
+            {
+                backgroundColor: theme.colors.background,
+                justifyContent: 'space-around',
+                alignItems: 'center'
+            }
+        ]}>
+            <View style={{ alignSelf: 'center' }}>
+                <DiscoBall size={160} />
             </View>
+            <WelcomeCard userName={labelUserName} />
+
+            <View style={{ width: '100%', marginTop: 60 }}>
+                <Txt variant="headlineSmall" style={{ textAlign: 'center' }}>Llistat de Pedidos</Txt>
+                <Divider style={GeneralStyles.divider} />
+            </View>
+            {content}
         </View>
     );
 }

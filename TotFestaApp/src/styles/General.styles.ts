@@ -4,13 +4,16 @@ export const GeneralStyles = StyleSheet.create({
     body: {
         flex: 1,
         justifyContent: 'center',
-        padding: 20,
+        paddingHorizontal: 20,
+        height: '100%',
+        gap: 5,
+        paddingTop: 15
     },
 
-    btnIconTheme: {
+    btnIconTopRight: {
         position: 'absolute',
-        top: 60,
-        right: 5,
+        top: 40,
+        right: 10,
     },
 
     row: {
@@ -19,7 +22,7 @@ export const GeneralStyles = StyleSheet.create({
     },
 
     divider: {
-        marginVertical: 15,
+        marginVertical: 10,
         height: 1.5,
     },
 

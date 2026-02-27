@@ -17,7 +17,8 @@ export default function ProtectedLayout() {
         <Stack screenOptions={{
             headerShown: false
         }}>
-            <Stack.Screen name="index" />
+            <Stack.Screen name="UserPage" />
+            <Stack.Screen name="PreferencesPage" />
             <Stack.Screen name="(tabs)" />
         </Stack>
     );

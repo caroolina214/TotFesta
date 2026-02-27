@@ -254,7 +254,7 @@ export default function DetallClient() {
                 icon="pencil"
                 onPress={handleEdit}
                 size={28}
-                style={[GeneralStyles.btnIconTheme, { position: "absolute", top: 35, right: 70 }]}
+                style={[GeneralStyles.btnIconTopRight, { position: "absolute", top: 35, right: 70 }]}
                 iconColor={
                     isDark ?
                         (theme.colors as any).onQuaternary
@@ -265,7 +265,7 @@ export default function DetallClient() {
                 icon="delete"
                 onPress={showDialog}
                 size={28}
-                style={[GeneralStyles.btnIconTheme, { position: "absolute", top: 35, right: 20 }]}
+                style={[GeneralStyles.btnIconTopRight, { position: "absolute", top: 35, right: 20 }]}
                 iconColor={
                     isDark ?
                         (theme.colors as any).onQuaternary
