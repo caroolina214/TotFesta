@@ -2,16 +2,14 @@ import DiscoBall from '@/components/common/DiscoBall';
 import Txt from '@/components/common/Txt';
 import LoginForm from '@/components/forms/LoginForm';
 
-import { useThemeContext } from '@/providers/ThemeProvider';
 import { GeneralStyles } from '@/styles/General.styles';
 import { loginStyles } from '@/styles/LoginPage.styles';
 
 import React from 'react';
 import { ScrollView, View } from 'react-native';
-import { IconButton, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 
 export default function LoginPage() {
-    const { themeMode, setThemeMode } = useThemeContext();
     const theme = useTheme();
 
     return (

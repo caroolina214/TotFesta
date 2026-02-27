@@ -1,13 +1,12 @@
 import Btn from '@/components/common/Btn';
-import { useThemeContext } from '@/providers/ThemeProvider';
-import React from 'react';
-import { View } from 'react-native';
-import { Divider, IconButton, Button, useTheme } from 'react-native-paper';
 import Txt from '@/components/common/Txt';
-import { GeneralStyles } from '@/styles/General.styles';
 import { useAuth } from '@/hooks/useAuth';
 import { useUserStore } from '@/stores/user.store';
-import { Stack, useRouter } from 'expo-router';
+import { GeneralStyles } from '@/styles/General.styles';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { View } from 'react-native';
+import { Divider, IconButton, useTheme } from 'react-native-paper';
 
 export default function UserPage() {
     const theme = useTheme();
@@ -23,17 +22,17 @@ export default function UserPage() {
             <Divider style={GeneralStyles.divider} />
             <View style={[GeneralStyles.body, { justifyContent: 'flex-start' }]}>
                 <View style={{ gap: 15 }}>
-                    <View style={GeneralStyles.row}>
+                    <View style={{ gap: 5 }}>
                         <Txt variant="labelLarge">Nom complet: </Txt>
-                        <Txt variant="bodyLarge">{user?.name}</Txt>
+                        <Txt variant="bodyLarge">{user?.full_name}</Txt>
                     </View>
 
-                    <View style={GeneralStyles.row}>
+                    <View style={{ gap: 5 }}>
                         <Txt variant="labelLarge">Email: </Txt>
                         <Txt variant="bodyLarge">{user?.email}</Txt>
                     </View>
 
-                    <View style={GeneralStyles.row}>
+                    <View style={{ gap: 5 }}>
                         <Txt variant="labelLarge">Rol: </Txt>
                         <Txt variant="bodyLarge">{role?.name}</Txt>
                     </View>

@@ -88,12 +88,11 @@ export default function HomePage() {
             ;
     }
 
-    var labelUserName;
+    let labelUserName = "";
 
-    if (!user) {
-        labelUserName = ""
-    } else {
-        labelUserName = user.name;
+    if (user) {
+        let userFullName = user.full_name.split(" ");
+        labelUserName = userFullName.at(0) ?? ""
     }
 
     return (

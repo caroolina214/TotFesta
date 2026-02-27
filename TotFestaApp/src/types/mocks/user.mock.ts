@@ -1,4 +1,4 @@
-import { Role, User } from '@/types/User';
+import { Role, User } from '@/types/Employee';
 
 
 // -----------------------------------------------------

@@ -1,4 +1,5 @@
-import { loginMocks } from "@/services/auth.service";
+import { supabase } from "@/config/supabaseClient";
+import { fetchProfileByAuthId, login } from "@/services/auth.service";
 import { useUserStore } from "@/stores/user.store";
 import { useRouter, useSegments } from "expo-router";
 import { createContext, useEffect, useMemo, useState } from "react";
@@ -7,14 +8,14 @@ type AuthContextType = {
     isReady: boolean;
     isLoggedIn: boolean;
     logIn: (email: string, password: string) => Promise<void>;
-    logOut: () => void;
+    logOut: () => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
     isReady: false,
     isLoggedIn: false,
     logIn: async () => { },
-    logOut: () => { },
+    logOut: async () => { },
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -54,7 +55,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         if (!isHydrated) return;
 
-        setIsAuthReady(true);
         const unsub =
             typeof useUserStore.persist?.onFinishHydration === "function"
                 ? useUserStore.persist.onFinishHydration(() => setIsHydrated(true))
@@ -63,7 +63,70 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return () => {
             if (typeof unsub === "function") unsub();
         };
+
     }, [isHydrated]);
+
+    // Sincronitzar sessió de Supabase + carregar perfil
+    useEffect(() => {
+        if (!isHydrated) return;
+
+        let isMounted = true;
+
+        const syncProfile = async (session: { user: { id?: string }; access_token: string }) => {
+            if (!session.user?.id) {
+                clearUserStore();
+                return false;
+            }
+
+            // Si ja tenim usuari carregat, no cal repetir
+            if (user && role && token) return true;
+
+            try {
+                console.log("session.user.id:", session.user.id);
+                const profile = await fetchProfileByAuthId(session.user.id);
+                if (!isMounted) return false;
+
+                setUserStore(profile.user, profile.role, session.access_token);
+                return true;
+            } catch {
+                clearUserStore();
+                await supabase.auth.signOut();
+                return false;
+            }
+        };
+
+        const loadSession = async () => {
+            const { data, error } = await supabase.auth.getSession();
+            if (!isMounted) return;
+
+            if (error || !data.session) {
+                clearUserStore();
+                setIsAuthReady(true);
+                return;
+            }
+
+            await syncProfile(data.session);
+
+            if (isMounted) setIsAuthReady(true);
+        };
+
+        loadSession();
+
+        const { data: authListener } = supabase.auth.onAuthStateChange(
+            async (event, session) => {
+                if (event === "SIGNED_OUT" || !session) {
+                    clearUserStore();
+                    return;
+                }
+                await syncProfile(session);
+            }
+        );
+
+        return () => {
+            isMounted = false;
+            authListener?.subscription?.unsubscribe();
+        };
+    }, [isHydrated, user, role, token, setUserStore, clearUserStore]);
 
 
     // Navegació protegida (redireccions automàtiques)
@@ -84,13 +147,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Funció de login (crida al service)
     const logIn = async (email: string, password: string) => {
-        const session = await loginMocks(email, password);
+        // const session = await loginMocks(email, password);
+        const session = await login(email, password);
         setUserStore(session.user, session.role, session.token);
+        // router.replace("/(protected)");
     };
 
     // Funció de logout
-    const logOut = () => {
+    const logOut = async () => {
         clearUserStore();
+        await useUserStore.persist.clearStorage();
+        await supabase.auth.signOut();
         router.replace("/LoginPage");
     };
 
